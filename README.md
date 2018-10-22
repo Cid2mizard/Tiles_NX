@@ -8,6 +8,8 @@ Features :
 
 	- 100 puzzles.  
 	- Minimal graphic design.
+	- Savegame.
+	- Music and sound.
 
 Controls :
 
