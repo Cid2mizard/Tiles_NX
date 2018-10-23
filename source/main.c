@@ -63,8 +63,6 @@ typedef struct
 {
 	SDL_Texture * texture;
 	SDL_Surface * surface;
-	SDL_Rect SrcR;
-	SDL_Rect DestR;
 } 
 images;
 images Background, Sprite[8];
@@ -217,7 +215,7 @@ void InitLevel()
 		}
 	}
 
-	//On récupère le niveau courant dans le tableau
+	//On rÃ©cupÃ¨re le niveau courant dans le tableau
 	for(colonnes = 0; colonnes < 10; colonnes++)
 	{
 		for(lignes = 0; lignes < 9; lignes++)
@@ -403,7 +401,7 @@ void ManageInput()
 						else if (niveau_best[niveau_courant] == 0)
 							niveau_best[niveau_courant] = current;
 
-						//On résoud le niveau
+						//On rÃ©soud le niveau
 						niveau_solved[niveau_courant] = SOLVED;
 
 						//On debloque les 4 prochains niveau
@@ -415,9 +413,9 @@ void ManageInput()
 							}
 						}
 
-						//Compteur d'étoile à zéro
+						//Compteur d'Ã©toile Ã  zÃ©ro
 						count_star = 0;
-						//On compte les étoiles
+						//On compte les Ã©toiles
 						for (i = 0; i < MAX_LVL; i++)
 						{
 							if (niveau_solved[i] == SOLVED)
@@ -507,7 +505,7 @@ void printGame()
 					//Les tiles
 					renderTexture(Sprite[1].texture, renderer, niveau_unlocked[page_courante*16 + lignes*4 + colonnes]*96, 0, 367 + colonnes*150, 48 + lignes*150, 96, 96);
 
-					//Les étoiles
+					//Les Ã©toiles
 					if (niveau_solved[page_courante*16 + lignes*4 + colonnes] == SOLVED)
 					{
 						renderTexture(Sprite[4].texture, renderer, 0, 0, 401 + colonnes*150, 111 + lignes*150, 27, 27);
@@ -630,7 +628,7 @@ int main()
 
 	// Create an SDL window & renderer
 	window = SDL_CreateWindow("Main-Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 0, 0, SDL_WINDOW_FULLSCREEN_DESKTOP);
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer,SDL_BLENDMODE_BLEND);
 
 	// Font loading
@@ -669,19 +667,19 @@ int main()
 	Sprite[7].texture = SDL_CreateTextureFromSurface(renderer, Sprite[7].surface);
 	SDL_FreeSurface(Sprite[7].surface);
 
-	//On débloque les 4 premiers niveaux
+	//On dÃ©bloque les 4 premiers niveaux
 	for (i = 4; i < MAX_LVL; i++)
 		niveau_unlocked[i] = LOCKED;
 
 	//On charge la sauvegarde
 	charger();
 
-	//On compte les étoiles
+	//On compte les Ã©toiles
 	for (i = 0; i < MAX_LVL; i++)
 		if (niveau_solved[i] == SOLVED)
 			count_star++;
 
-	//On active l'écran titre
+	//On active l'Ã©cran titre
 	title_mode = true;
 
 	Mix_Music *musique;
@@ -707,11 +705,15 @@ int main()
 	//On sauvegarde la partie
 	sauvegarder();
 
-	//On détruit les textures
+	//On dÃ©truit les textures
 	for (i = 0; i < 8; i++)
 		SDL_DestroyTexture(Sprite[i].texture);
 
-	//On detruit la fenètre
+	romfsExit();
+	TTF_Quit();
+	IMG_Quit();
+
+	//On detruit la fenÃ¨tre
 	SDL_DestroyWindow(window);
 
 	//On quitte
